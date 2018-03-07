@@ -85,6 +85,7 @@ func Connections(n int) func(*Attacker) {
 	return func(a *Attacker) {
 		tr := a.client.Transport.(*http.Transport)
 		tr.MaxIdleConnsPerHost = n
+    tr.MaxIdleConns = n
 	}
 }
 
