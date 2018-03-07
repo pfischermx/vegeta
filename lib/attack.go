@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"sync"
 	"time"
+	"log"
 
 	"golang.org/x/net/http2"
 )
@@ -249,6 +250,7 @@ func (a *Attacker) hit(tr Targeter, tm time.Time) *Result {
 
 	req, err := tgt.Request()
 	if err != nil {
+    log.Printf("Failed to make request: %v", err)
 		return &res
 	}
 
@@ -260,6 +262,7 @@ func (a *Attacker) hit(tr Targeter, tm time.Time) *Result {
 
 	in, err := io.Copy(ioutil.Discard, r.Body)
 	if err != nil {
+    log.Printf("Failed to get content: %v", err)
 		return &res
 	}
 	res.BytesIn = uint64(in)
