@@ -140,6 +140,15 @@ func KeepAlive(keepalive bool) func(*Attacker) {
 	}
 }
 
+// IdleTimeout returns a functional option which sets the maximum amount of time an idle
+// (keep-alive) connection will remain idle before closing
+func IdleTimeout(d time.Duration) func(*Attacker) {
+	return func(a *Attacker) {
+		tr := a.client.Transport.(*http.Transport)
+		tr.IdleConnTimeout = d
+	}
+}
+
 // TLSConfig returns a functional option which sets the *tls.Config for a
 // Attacker to use with its requests.
 func TLSConfig(c *tls.Config) func(*Attacker) {
